@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Easy</title>
+    <link rel="stylesheet" href="/static/anotherstyle.css">
+</head>
+<body>
+    <div id="root">
+    <div class="container">
+    <header class="header">
+     <div class="content">
+      <img src="/static/tech.jpg">
+     
+     <span>Already Registered? <a href="{{ url_for('login') }}">Login</a></span>
+    </div>
+    </header>
+    <h1>Create your Job Easy profile</h1>
+    <p>Search &  apply to jobs from India's Job Site</p>
+
+    <section class="main-sections">
+    <section class="main">
+        
+        <h1>For Job Seeker</h1>
+        <form id="signupForm" action="/register" method="POST">
+            <div class="form-group">
+              <label for="fullname">Full Name</label>
+              <input type="text" id="fullname" name="fullname" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Mobile Number</label>
+              <div class="phone-input">
+                <select id="countryCode" name="countryCode" required>
+                  <option value="+91">🇮🇳 +91</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+61">🇦🇺 +61</option>
+                </select>
+                <input type="tel" id="phone" placeholder="Enter mobile number" name="phone" required pattern="[0-9]{10}" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" required minlength="6" />
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required />
+              </div>
+            <div class="form-group">
+                <label for="status">Work Status</label>
+                <label for="fresher">I am Fresher</label>
+                <input type="radio" id="status" name="status_work" value="I am Fresher" />
+                <label for="experienced">I am Experienced</label>
+                <input type="radio" id="status" name="status_work" value="I am Experienced" />
+            </div>
+
+            
+            <button type="submit" onclick="">Register Here</button>
+    
+          </form>
+    </section>
+    <section class="main_hr">
+        
+      <h1>For Reqruiter</h1>
+      <form id="signupForm" action="/register_hr" method="POST">
+          <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Mobile Number</label>
+            <div class="phone-input">
+              <select id="countryCode" name="countryCode" required>
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+61">🇦🇺 +61</option>
+              </select>
+              <input type="tel" id="phone" placeholder="Enter mobile number" name="phone" required pattern="[0-9]{10}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required minlength="6" />
+          </div>
+          <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" required />
+            </div>
+          <div class="form-group">
+              <label for="status">Comapany Name</label>
+              <input type="text" id="Companyname" name="company" required />
+          </div>
+
+          
+          <button type="submit" onclick="">Register Here</button>
+  
+        </form>
+  </section>
+</section>
+
+    
+    </div>
+    </div>
+    
+    
+</body>
+</html>

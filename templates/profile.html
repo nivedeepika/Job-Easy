@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <h2>Update Your Profile</h2>
+
+    <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" value="{{ user._id }}">
+
+        <!-- Profile details -->
+        <label for="fullname">Full Name:</label><br>
+        <input type="text" id="fullname" name="fullname" value="{{ user.fullname }}" required><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" value="{{ user.phone }}" required><br><br>
+
+        <label for="status">Work Status:</label><br>
+        <select id="status" name="status">
+            <option value="Fresher" {% if user.status == "Fresher" %}selected{% endif %}>Fresher</option>
+            <option value="Experienced" {% if user.status == "Experienced" %}selected{% endif %}>Experienced</option>
+        </select><br><br>
+
+        <label for="resume">Upload Resume (PDF only):</label><br>
+        <input type="file" id="resume" name="resume" accept=".pdf"><br><br>
+
+        {% if user.resume %}
+            <p>Current Resume: <a href="{{ url_for('static', filename=user.resume) }}" target="_blank">View Resume</a></p>
+        {% endif %}
+
+        <!-- Profile Summary Section -->
+        <h3>Profile Summary</h3>
+        <textarea name="profile_summary" placeholder="Enter a short summary about yourself">{{ user.profile_summary }}</textarea><br><br>
+
+        <!-- Certifications Section -->
+        <h3>Certifications</h3>
+        {% if user.certifications %}
+            {% for cert in user.certifications %}
+                {% set i = loop.index0 %}
+                <div>
+                    <label for="certification_name_{{ i }}">Certification Name:</label><br>
+                    <input type="text" name="certifications[{{ i }}][name]" value="{{ cert.name }}"><br>
+
+                    <label for="certification_details_{{ i }}">Certification Details:</label><br>
+                    <textarea name="certifications[{{ i }}][details]">{{ cert.details }}</textarea><br>
+
+                    <label for="certification_date_{{ i }}">Issued Date:</label><br>
+                    <input type="date" name="certifications[{{ i }}][issued_date]" value="{{ cert.issued_date }}"><br><br>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Add New Certification Section -->
+        <h4>Add New Certification</h4>
+        <div>
+            <label>Certification Name:</label><br>
+            <input type="text" name="certifications[new][name]" placeholder="Enter Certification Name"><br>
+
+            <label>Certification Details:</label><br>
+            <textarea name="certifications[new][details]" placeholder="Enter Certification Details"></textarea><br>
+
+            <label>Issued Date:</label><br>
+            <input type="date" name="certifications[new][issued_date]"><br><br>
+        </div>
+
+        <h3>IT Skills</h3>
+        <textarea name="it_skills" placeholder="List your IT skills">{{ user.it_skills }}</textarea><br><br>
+
+        <h3>Projects</h3>
+        {% if user.projects %}
+            {% for project in user.projects %}
+                {% set i = loop.index0 %}
+                <div>
+                    <label for="project_heading_{{ i }}">Project Heading:</label><br>
+                    <input type="text" name="projects[{{ i }}][heading]" value="{{ project.heading }}"><br>
+
+                    <label for="project_summary_{{ i }}">Summary:</label><br>
+                    <textarea name="projects[{{ i }}][summary]">{{ project.summary }}</textarea><br>
+
+                    <label for="project_link_{{ i }}">Project Link:</label><br>
+                    <input type="url" name="projects[{{ i }}][link]" value="{{ project.link }}"><br>
+
+                    <label for="project_skills_{{ i }}">Skills:</label><br>
+                    <input type="text" name="projects[{{ i }}][skills]" value="{{ project.skills }}"><br><br>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Add Project Section -->
+        <h4>Add New Project</h4>
+        <div>
+            <label>Project Heading:</label><br>
+            <input type="text" name="projects[{{ user.projects|length if user.projects else 0 }}][heading]"><br>
+
+            <label>Summary:</label><br>
+            <textarea name="projects[{{ user.projects|length if user.projects else 0 }}][summary]"></textarea><br>
+
+            <label>Project Link:</label><br>
+            <input type="url" name="projects[{{ user.projects|length if user.projects else 0 }}][link]"><br>
+
+            <label>Skills:</label><br>
+            <input type="text" name="projects[{{ user.projects|length if user.projects else 0 }}][skills]"><br><br>
+        </div>
+
+        <input type="submit" value="Update Profile">
+    </form>
+
+    <br>
+    <a href="{{ url_for('home', user_id=user._id) }}">Back to Home</a>
+
+</body>
+</html>

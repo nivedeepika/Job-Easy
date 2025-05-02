@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Home</title>
+  
+  <style>
+    /* Basic Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* Header Styling */
+    .header {
+      background-color: #2C3E50;
+      color: white;
+      padding: 20px;
+    }
+
+    .header .content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header img {
+      height: 50px;
+    }
+
+    .header button {
+      background-color: #e74c3c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .header button:hover {
+      background-color: #c0392b;
+    }
+
+    /* Post a Job Button Styling */
+    #postJobBtn {
+      background-color: #3498db;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    #postJobBtn:hover {
+      background-color: #2980b9;
+    }
+
+    /* Post Job Form Section Styling */
+    #postJobFormSection {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #postJobFormSection label {
+      font-weight: bold;
+    }
+
+    #postJobFormSection input,
+    #postJobFormSection textarea,
+    #postJobFormSection button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #postJobFormSection textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    #postJobFormSection button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #postJobFormSection button:hover {
+      background-color: #27ae60;
+    }
+
+    /* Job Card Section Styling (Horizontal Design) */
+    .job-card {
+      display: flex;
+      flex-direction: row;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .job-card .job-details {
+      flex: 1.2;
+    }
+
+    .job-card .applicants-list {
+      flex: 1.8;
+      border-left: 2px dashed #ddd;
+      padding-left: 20px;
+    }
+
+    .job-card h3 {
+      color: #2C3E50;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .job-card p {
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .job-card strong {
+      font-weight: bold;
+    }
+
+    .applicants-list h4 {
+      margin-bottom: 10px;
+      color: #2C3E50;
+    }
+
+    .applicants-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .applicants-list li {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+
+    .applicants-list a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .applicants-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .job-card {
+        flex-direction: column;
+      }
+
+      .job-card .applicants-list {
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px dashed #ddd;
+        padding-top: 20px;
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="root">
+  <div class="container">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="content">
+        <img src="/static/job.jpg" alt="Company Logo">
+        <a href="{{ url_for('profile_hr', user_id=user._id) }}">
+          <button>Update Profile</button>
+        </a>
+      </div>
+    </header>
+
+    <!-- Section 1: Post a Job Button -->
+    <section>
+      <button id="postJobBtn">Post a Job</button>
+    </section>
+
+    <!-- Section 2: Post Job Form (Initially Hidden) -->
+    <section id="postJobFormSection" style="display: none; margin-top: 20px;">
+      <form action="{{ url_for('post_job') }}" method="POST">
+        <input type="hidden" name="user_id" value="{{ user._id }}">
+        
+        <label>Job Title:</label>
+        <input type="text" name="title" required><br><br>
+        
+        <label>Job Description:</label>
+        <textarea name="description" required></textarea><br><br>
+        
+        <label>Location:</label>
+        <input type="text" name="location" required><br><br>
+        
+        <button type="submit">Submit Job</button>
+      </form>
+    </section>
+
+    <!-- Section 3: Posted Job Cards -->
+    <section style="margin-top: 40px;">
+      <h2>Posted Jobs</h2>
+      {% for job in jobs %}
+        <div class="job-card">
+          <div class="job-details">
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.description }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+          </div>
+
+          <div class="applicants-list">
+            <h4>Applicants:</h4>
+            {% if job.applicants %}
+              <ul>
+                {% for applicant in job.applicants %}
+                  <li>
+                    <strong>{{ applicant.fullname }}</strong> — {{ applicant.email }}<br>
+                    Phone: {{ applicant.phone }}<br>
+                    Status: {{ applicant.status }}<br>
+                    <a href="{{ url_for('static', filename=applicant.resume) }}" target="_blank">View Resume</a><br>
+                    <small>Applied on: {{ applicant.applied_at.strftime('%Y-%m-%d %H:%M') if applicant.applied_at }}</small>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No applicants yet.</p>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <p>No jobs posted yet.</p>
+      {% endfor %}
+    </section>
+    
+  </div>
+</div>
+
+<!-- JavaScript to toggle post job form -->
+<script>
+  const postJobBtn = document.getElementById('postJobBtn');
+  const postJobFormSection = document.getElementById('postJobFormSection');
+
+  postJobBtn.addEventListener('click', () => {
+    postJobFormSection.style.display = (postJobFormSection.style.display === 'none') ? 'block' : 'none';
+  });
+</script>
+
+</body>
+</html>

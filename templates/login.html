@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/anotherstyle.css">
+</head>
+<body>
+    <div id="root">
+        <div class="container">
+        <header class="header">
+         <div class="content">
+            <img src="/static/tech.jpg">
+         
+         <span>New User? <a href="">Register Here</a></span>
+        </div>
+        </header>
+        <h1>Create your Job Easy profile</h1>
+        <p>Search &  apply to jobs from India's Job Site</p>
+    
+        <section class="main-sections">
+        <section class="main">
+          <h1>Log in for Job Seeker</h1>
+            <form id="signupForm" action="/login" method="POST">
+                {% if error %}
+                <p style="color: red;">{{ error }}</p>
+                {% endif %}
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" id="email" required />
+                </div>
+            
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" id="password" required minlength="6" />
+                </div>
+            
+                <button type="submit">Log in</button>
+            </form>
+
+        </section>
+        <section class="main_hr">
+          <h1>Log in for Reqruiter</h1>
+          <form id="signupForm" action="/login_hr" method="POST">
+              {% if error %}
+              <p style="color: red;">{{ error }}</p>
+              {% endif %}
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+              </div>
+          
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required minlength="6" />
+              </div>
+          
+              <button type="submit">Log in</button>
+          </form>
+
+      </section>
+  </section>
+        
+        </div>
+        </div>
+
+    
+</body>
+</html>

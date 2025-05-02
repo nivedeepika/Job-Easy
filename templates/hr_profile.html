@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <form action="{{ url_for('profile_hr') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" value="{{ user._id }}">
+
+        <!-- Profile details -->
+        <label for="fullname">Full Name:</label><br>
+        <input type="text" id="fullname" name="fullname" value="{{ user.fullname }}" required><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" value="{{ user.phone }}" required><br><br>
+
+        <label for="company">Company:</label><br>
+        <input type="text" id="company" name="company" value="{{ user.company }}" required><br><br>
+
+        <label for="phone">Company Website:</label><br>
+        <input type="url" id="website" name="website" value="{{ user.website}}" required><br><br>
+
+        <label for="phone"> Linkedin URL:</label><br>
+        <input type="url" id="linkedin" name="linkedin" value="{{ user.linkedin}}" required><br><br>
+         
+        <label for="phone">Company Details:</label><br>
+        <label for="phone">Industry:</label><br>
+        <input type="text" id="industry" name="industry" value="{{ user.industry}}" placeholder="e.g., IT, Finance, Healthcare" required><br><br>
+
+        <label for="phone"> Company Location:</label><br>
+        <input type="text" id="company_location" name="company_location" value="{{ user.company_location}}" required><br><br>
+
+        <label for="phone"> Company Size</label><br>
+        <input type="text" id="company_size" name="company_size" value="{{ user.company_size}}" required><br><br>
+        
+        <input type="submit" value="Update Profile">
+        
+    </form>
+</body>
+</html>
